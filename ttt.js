@@ -22,3 +22,50 @@ function printBoard(){
         document.getElementById('debug').innerHTML += "<br>"
     }
 }
+function boxClick(index){
+    var row = Math.floor(index/3);
+    var col = index%3;
+    if (board[row][col]==0 && !isWin){
+        board[row][col] = turn + 1;
+        changeImage(index);
+        checkWin();
+        turn = 1-turn;
+    }
+}
+function changeImage(index){
+    if(turn == 0){
+        document.getElementById("box" + index).src = "cross.png"
+    } else {
+        document.getElementById("box" + index).src = "circle.png"
+    }
+}
+function reset(){
+    isWin = false;
+    for(var i=0; i<=8; i++){
+        document.getElementById("box"+i).src = "box.png"
+    }
+    initBoard;
+    document.getElementById("isWin").innerHTML = "";
+}
+function checkWin(){
+    for(var i=0; i<3; i++){
+        var player = board[i][0];
+        if (player != 0 && player == board[i][1] && player == board[i][2]){
+            isWin = true;
+        }
+    }
+    for(var i=0; i<3; i++){
+        var player = board[0][i];
+        if (player != 0 && player == board[1][i] && player == board[2][i]){
+            isWin = true;
+        }
+    }
+    var player = board[0][0];
+    if (player != 0 && player == board[1][1] && player == [2][2]){
+        isWin = true;
+    }
+    var player = board[0][2];
+    if (player != 0 && player == board[1][1] && player == [2][0]){
+        isWin = true;
+    }
+}
